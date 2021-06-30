@@ -6,6 +6,9 @@ namespace SideScroller.Camera
 	//Uses code from kurozael#1337/Conna https://discord.com/channels/833983068468936704/833983449857654795/837660827670675507
 	public class SideScrollerCamera : Sandbox.Camera
 	{
+		[ConVar.Replicated( "sidescroller_debug_aim" )]
+		public static bool Debug { get; set; } = false;
+
 		public float Zoom = MaxZoom;
 		public float ZoomSensitivity = 4f;
 		public const float MinZoom = 21f;
@@ -27,13 +30,14 @@ namespace SideScroller.Camera
 
 			Vector3 mouseToWorld = PlayerPawn.Position + mouseToLocal;
 
-			DebugOverlay.Line( PlayerPawn.Position, mouseToWorld, Color.Red, 2f, false ); //Server
+			if ( Debug )
+			{
+				DebugOverlay.Line( PlayerPawn.Position, mouseToWorld, Color.Red, 2f, false ); //Server
+			}
 
 			Rotation LookRot = Rotation.LookAt( (mouseToWorld).WithY( 0 ).Normal ); ;
 			//PlayerPawn.Rotation = LookRot;
 			////PlayerPawn.EyeRot = PlayerPawn.Rotation;
-
-			DebugOverlay.Line( PlayerPawn.Position, mouseToWorld, Color.Blue, 2f, false ); //Client
 
 			if ( PlayerPawn.LifeState == LifeState.Alive )
 			{
