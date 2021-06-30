@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using SideScroller.Hud;
 
 //
 // You don't need to put things in a namespace, but it doesn't hurt.
@@ -15,7 +16,7 @@ namespace SideScroller
 	/// Your game needs to be registered (using [Library] here) with the same name
 	/// as your game addon. If it isn't then we won't be able to find it.
 	/// </summary>
-	[Library( "testing" )]
+	[Library( "sidescroller" )]
 	public class SideScrollerGame : Game
 	{
 		public SideScrollerGame()
