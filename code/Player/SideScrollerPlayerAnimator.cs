@@ -6,18 +6,17 @@ namespace SideScroller.Player
 {
 	public class SideScrollerPlayerAnimator : PawnAnimator
 	{
-		private TimeSince TimeSinceFootShuffle = 60;
+		TimeSince TimeSinceFootShuffle = 60;
 
-		private float duck;
+
+		float duck;
 
 		public override void Simulate()
 		{
 			//var idealRotation = Rotation.LookAt( Input.Rotation.Forward.WithZ( 0 ), Vector3.Up );
-
 			var idealRotation = Rotation.Identity;
-
 			DoRotation( idealRotation );
-			DoWalk( idealRotation );
+			DoWalk(idealRotation);
 
 			//
 			// Let the animation graph know some shit
@@ -58,6 +57,7 @@ namespace SideScroller.Player
 				SetParam( "aimat_weight", 0.5f ); // old
 				SetParam( "aim_body_weight", 0.5f );
 			}
+
 		}
 
 		public virtual void DoRotation( Rotation idealRotation )
@@ -88,7 +88,7 @@ namespace SideScroller.Player
 			SetParam( "b_shuffle", TimeSinceFootShuffle < 0.1 );
 		}
 
-		private void DoWalk( Rotation idealRotation )
+		void DoWalk(Rotation idealRotation)
 		{
 			// Move Speed
 			{
@@ -101,6 +101,8 @@ namespace SideScroller.Player
 				SetParam( "move_direction", angle );
 				SetParam( "move_speed", Velocity.Length );
 				SetParam( "move_groundspeed", Velocity.WithZ( 0 ).Length );
+				SetParam( "move_y", sideward );
+				SetParam( "move_x", forward );
 			}
 
 			// Wish Speed
@@ -114,6 +116,8 @@ namespace SideScroller.Player
 				SetParam( "wish_direction", angle );
 				SetParam( "wish_speed", WishVelocity.Length );
 				SetParam( "wish_groundspeed", WishVelocity.WithZ( 0 ).Length );
+				SetParam( "wish_y", sideward );
+				SetParam( "wish_x", forward );
 			}
 		}
 
