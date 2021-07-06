@@ -21,7 +21,7 @@ namespace SideScroller
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;
-			EnableHideInFirstPerson = true;
+			EnableHideInFirstPerson = false;
 			EnableShadowInFirstPerson = true;
 
 			base.Respawn();
