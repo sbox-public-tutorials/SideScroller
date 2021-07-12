@@ -9,15 +9,18 @@ namespace SideScroller.Camera
 		[ConVar.Replicated( "sidescroller_debug" )]
 		public static bool Debug { get; set; } = false;
 
-		public float Zoom = MaxZoom;
-		public float ZoomSensitivity = 4f;
-		public const float MinZoom = 21f;
-		public const float MaxZoom = 60f;
+		public float Zoom = 250f;
+		public float ZoomSensitivity = 10f;
+		public const float MinZoom = 200f;
+		public const float MaxZoom = 400f;
 
-		//public override void Activated()
-		//{
-		//	base.Activated();
-		//}
+		public override void Activated()
+		{
+			//TODO: Probably not hardcode this?
+			FieldOfView = 90;
+
+			base.Activated();
+		}
 
 		public override void Update()
 		{
@@ -48,7 +51,7 @@ namespace SideScroller.Camera
 			}
 
 			// align with the player, but offset us -3000 on the y axis (or whatever you want)
-			Pos = PlayerPawn.EyePos + new Vector3( 0f, 500f, 32f );
+			Pos = PlayerPawn.EyePos + new Vector3( 0f, Zoom, 32f );
 
 			var targetDirection = (PlayerPawn.EyePos - Pos).Normal;
 
@@ -77,8 +80,6 @@ namespace SideScroller.Camera
 			{
 				Zoom = MaxZoom;
 			}
-
-			FieldOfView = Zoom;
 
 			Viewer = null;
 		}
