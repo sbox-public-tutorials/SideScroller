@@ -6,7 +6,7 @@ namespace SideScroller.Camera
 	//Uses code from kurozael#1337/Conna https://discord.com/channels/833983068468936704/833983449857654795/837660827670675507
 	public class SideScrollerCamera : Sandbox.Camera
 	{
-		[ConVar.Replicated( "sidescroller_debug_aim" )]
+		[ConVar.Replicated( "sidescroller_debug" )]
 		public static bool Debug { get; set; } = false;
 
 		public float Zoom = MaxZoom;
@@ -63,7 +63,11 @@ namespace SideScroller.Camera
 			// Setup Zoom
 			Zoom -= Input.MouseWheel * ZoomSensitivity;
 
-			//DebugOverlay.ScreenText( $"Zoom: {Zoom}" );
+			if ( Debug )
+			{
+				DebugOverlay.ScreenText( $"Zoom: {Zoom}" );
+			}
+
 			if ( Zoom < MinZoom )
 			{
 				Zoom = MinZoom;
