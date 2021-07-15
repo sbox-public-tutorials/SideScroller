@@ -27,29 +27,6 @@ namespace SideScroller.Camera
 			if ( Local.Pawn is not AnimEntity PlayerPawn )
 				return;
 
-			//Mouse handling
-			Vector3 mouseOffset = Screen.GetDirection( Mouse.Position ).WithY( 0.0f );
-			Vector3 mouseToLocal = (mouseOffset * 100.0f);
-
-			Vector3 mouseToWorld = PlayerPawn.Position + mouseToLocal;
-
-			if ( Debug )
-			{
-				DebugOverlay.Line( PlayerPawn.Position, mouseToWorld, Color.Red, 2f, false ); //Server
-			}
-
-			Rotation LookRot = Rotation.LookAt( (mouseToWorld).WithY( 0 ).Normal ); ;
-			//PlayerPawn.Rotation = LookRot;
-			////PlayerPawn.EyeRot = PlayerPawn.Rotation;
-
-			if ( PlayerPawn.LifeState == LifeState.Alive )
-			{
-				using ( Prediction.Off() )
-				{
-					GiveWantedRotation( mouseToWorld );
-				}
-			}
-
 			// align with the player, but offset us -3000 on the y axis (or whatever you want)
 			Pos = PlayerPawn.EyePos + new Vector3( 0f, Zoom, 32f );
 
@@ -82,17 +59,6 @@ namespace SideScroller.Camera
 			}
 
 			Viewer = null;
-		}
-
-		//From xrayhunter
-		[ServerCmd]
-		public static void GiveWantedRotation( Vector3 lookAtPos )
-		{
-			Entity pawn = ConsoleSystem.Caller.Pawn;
-			pawn.Rotation = Rotation.LookAt( (lookAtPos - pawn.Position).WithZ( 0 ).Normal );
-			pawn.EyeRot = pawn.Rotation;
-			//Log.Info( $"Gonna set rotation {pawn} {lookAtPos}" );
-			// DebugOverlay.Line(pawn.Position, lookAtPos, Color.Red, 1.0f, false);
 		}
 	}
 }
