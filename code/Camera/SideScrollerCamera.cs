@@ -6,7 +6,7 @@ namespace SideScroller.Camera
 	//Uses code from kurozael#1337/Conna https://discord.com/channels/833983068468936704/833983449857654795/837660827670675507
 	public class SideScrollerCamera : Sandbox.Camera
 	{
-		[ConVar.Replicated( "sidescroller_debug" )]
+		[ConVar.Replicated( "sidescroller_debug_camera" )]
 		public static bool Debug { get; set; } = false;
 
 		public float Zoom = 250f;
@@ -27,6 +27,13 @@ namespace SideScroller.Camera
 			if ( Local.Pawn is not AnimEntity PlayerPawn )
 				return;
 
+			//TODO: this is probably not a good place to put this code
+
+			if ( Input.Down( InputButton.Right ) )
+			{
+				PlayerPawn.Rotation = Rotation.FromYaw( 180 );
+			}
+
 			// align with the player, but offset us -3000 on the y axis (or whatever you want)
 			Pos = PlayerPawn.EyePos + new Vector3( 0f, Zoom, 32f );
 
@@ -46,6 +53,7 @@ namespace SideScroller.Camera
 			if ( Debug )
 			{
 				DebugOverlay.ScreenText( $"Zoom: {Zoom}" );
+				DebugOverlay.ScreenText(2,$"Player Yaw: {PlayerPawn.Rotation.Yaw()}");
 			}
 
 			if ( Zoom < MinZoom )
